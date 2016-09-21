@@ -24,12 +24,12 @@ public class ProductRoundtripTest {
 
     @Test
     public void save_and_load_product() {
-        Product product = new Product(1L, "cup");
+        Product product = new Product(1L, "cup", new Price(1,25));
 
         productRepository.save(product);
 
         em.flush();
         Product fetched = productRepository.findOne(1L);
-        assertThat(fetched).isEqualToComparingFieldByField(product);
+        assertThat(fetched).isEqualToComparingFieldByFieldRecursively(product);
     }
 }
