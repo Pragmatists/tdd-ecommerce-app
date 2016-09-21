@@ -57,4 +57,8 @@ public class Product {
     public Money getPrice() {
         return price;
     }
+
+    public long getId() {
+        return id;
+    }
 }
