@@ -11,8 +11,7 @@ import pl.pragmatists.trainings.ecommerce.cart.Cart;
 import pl.pragmatists.trainings.ecommerce.cart.CartItem;
 import pl.pragmatists.trainings.ecommerce.product.persistence.ProductRepository;
 
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.ArrayList;
 
 @Controller
 public class CartController {
@@ -24,12 +23,9 @@ public class CartController {
     private ProductRepository productRepository;
 
     @RequestMapping(value = "/user/{userId}/cart/items", method = RequestMethod.POST)
-    public ResponseEntity add(@PathVariable Long userId, @RequestBody CartJson cartJson) {
-
-        Stream<CartItemJson> stream = cartJson.items.stream();
-        Stream<CartItem> rStream = stream.map(c -> new CartItem(productRepository.findOne(c.productId), c.quantity));
-        Cart cart = new Cart(userId).withItems(rStream.collect(Collectors.toList()));
-
+    public ResponseEntity add(@PathVariable Long userId, @RequestBody CartItemJson cartItemJson) {
+        CartItem cartItem = new CartItem(productRepository.findOne(cartItemJson.productId), cartItemJson.quantity);
+        Cart cart = new Cart(userId).withItems(new ArrayList<CartItem>() {{add(cartItem);}});
         cartRepository.save(cart);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

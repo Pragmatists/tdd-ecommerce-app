@@ -1,6 +1,5 @@
 package pl.pragmatists.trainings.ecommerce.addtocart;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,12 +43,9 @@ public class AddToCartControllerTest {
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(
                         new JSONObject()
-                                .put("items", new JSONArray()
-                                        .put(new JSONObject()
-                                                .put("productId", 1L)
-                                                .put("quantity", 3)
-                                        )
-                                ).toString()
+                                .put("productId", 1L)
+                                .put("quantity", 3)
+                                .toString()
                 )
         );
 
