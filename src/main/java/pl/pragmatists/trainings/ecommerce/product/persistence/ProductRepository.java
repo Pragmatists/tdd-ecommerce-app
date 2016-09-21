@@ -1,8 +1,9 @@
 package pl.pragmatists.trainings.ecommerce.product.persistence;
 
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.repository.Repository;
 
-@Repository
-public interface ProductRepository extends CrudRepository<Product, Long> {
+public interface ProductRepository extends Repository<Product, Long> {
+    Product findOne(long productId);
+
+    Product save(Product product);
 }

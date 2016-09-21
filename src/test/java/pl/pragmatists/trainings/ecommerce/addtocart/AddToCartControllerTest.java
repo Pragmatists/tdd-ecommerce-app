@@ -1,5 +1,8 @@
 package pl.pragmatists.trainings.ecommerce.addtocart;
 
+import static org.assertj.core.api.Assertions.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+
 import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,14 +13,12 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+
 import pl.pragmatists.trainings.ecommerce.cart.Cart;
 import pl.pragmatists.trainings.ecommerce.cart.CartItem;
 import pl.pragmatists.trainings.ecommerce.common.Money;
 import pl.pragmatists.trainings.ecommerce.product.persistence.Product;
 import pl.pragmatists.trainings.ecommerce.product.persistence.ProductRepository;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

@@ -1,7 +1,9 @@
 package pl.pragmatists.trainings.ecommerce.user.persistence;
 
+import org.springframework.data.repository.Repository;
 
-import org.springframework.data.repository.CrudRepository;
+public interface UserRepository extends Repository<User, Long> {
+    User save(User product);
 
-public interface UserRepository extends CrudRepository<User, Long> {
+    User findOne(long userId);
 }
