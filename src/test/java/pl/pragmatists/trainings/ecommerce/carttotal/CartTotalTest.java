@@ -37,12 +37,12 @@ public class CartTotalTest {
 
     @Test
     public void total_for_one_product() throws Exception {
-
         Product handkerchief = productRepository.save(new Product(1L, "handkerchief", new Money(3, 50)));
         CartItem handkerchiefInCart = new CartItem(handkerchief, 1);
         cartRepository.save(new Cart(5L).withItems(newArrayList(handkerchiefInCart)));
 
         mvc.perform(get("/user/5/cart"))
+
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.total").value("3,50"));
 
