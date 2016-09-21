@@ -10,8 +10,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 import pl.pragmatists.trainings.ecommerce.cart.Cart;
 import pl.pragmatists.trainings.ecommerce.cart.CartItem;
+import pl.pragmatists.trainings.ecommerce.common.Money;
+import pl.pragmatists.trainings.ecommerce.product.persistence.Product;
+import pl.pragmatists.trainings.ecommerce.product.persistence.ProductRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -19,6 +23,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
+@Transactional
 public class AddToCartControllerTest {
 
     @Autowired
@@ -27,8 +32,14 @@ public class AddToCartControllerTest {
     @Autowired
     private CartRepository cartRepository;
 
+    @Autowired
+    private ProductRepository productRepository;
+
     @Test
     public void add_one_product() throws Exception {
+        Product product = new Product(1L, "cup", new Money(3, 50));
+        productRepository.save(product);
+
         mvc.perform(post("/user/5/cart/items")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(
@@ -43,7 +54,7 @@ public class AddToCartControllerTest {
         );
 
         assertThat(firstCart().userId()).isEqualTo(5L);
-        assertThat(firstCart().items()).containsExactly(new CartItem(1L, 3));
+        assertThat(firstCart().items()).containsExactly(new CartItem(product, 3));
     }
 
     private Cart firstCart() {

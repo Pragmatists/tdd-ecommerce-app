@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
+import pl.pragmatists.trainings.ecommerce.common.Money;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -24,11 +25,12 @@ public class ProductRoundtripTest {
 
     @Test
     public void save_and_load_product() {
-        Product product = new Product(1L, "cup", new Price(1,25));
+        Product product = new Product(1L, "cup", new Money(1,25));
 
         productRepository.save(product);
 
         em.flush();
+        em.clear();
         Product fetched = productRepository.findOne(1L);
         assertThat(fetched).isEqualToComparingFieldByFieldRecursively(product);
     }

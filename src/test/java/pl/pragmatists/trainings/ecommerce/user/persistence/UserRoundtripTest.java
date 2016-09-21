@@ -29,6 +29,7 @@ public class UserRoundtripTest {
         userRepository.save(product);
 
         em.flush();
+        em.clear();
         User fetched = userRepository.findOne(1L);
         assertThat(fetched).isEqualToComparingFieldByField(product);
     }
