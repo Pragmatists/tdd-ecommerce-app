@@ -16,20 +16,16 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserRoundtripTest {
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private TestEntityManager em;
 
     @Test
     public void save_and_load_user() {
         User product = new User(1L, "Anna");
 
-        userRepository.save(product);
-
-        em.flush();
+        em.persistAndFlush(product);
         em.clear();
-        User fetched = userRepository.findOne(1L);
+
+        User fetched = em.find(User.class, 1L);
         assertThat(fetched).isEqualToComparingFieldByField(product);
     }
 }

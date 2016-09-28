@@ -1,6 +1,6 @@
 package pl.pragmatists.trainings.ecommerce.addtocart;
 
-import java.util.ArrayList;
+import static java.util.Arrays.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,7 +30,7 @@ public class CartController {
     @RequestMapping(value = "/user/{userId}/cart/items", method = RequestMethod.POST)
     public ResponseEntity add(@PathVariable Long userId, @RequestBody CartItemJson cartItemJson) {
         CartItem cartItem = new CartItem(productRepository.findOne(cartItemJson.productId), cartItemJson.quantity);
-        Cart cart = new Cart(userId).withItems(new ArrayList<CartItem>() {{add(cartItem);}});
+        Cart cart = new Cart(userId).withItems(asList(cartItem));
         cartRepository.save(cart);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

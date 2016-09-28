@@ -7,6 +7,8 @@ import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestEntityManager;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -24,6 +26,7 @@ import pl.pragmatists.trainings.ecommerce.product.persistence.ProductRepository;
 @SpringBootTest
 @AutoConfigureMockMvc
 @Transactional
+@AutoConfigureTestEntityManager
 public class AddToCartControllerTest {
 
     @Autowired
@@ -35,10 +38,13 @@ public class AddToCartControllerTest {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private TestEntityManager em;
+
     @Test
     public void add_one_product() throws Exception {
         Product product = new Product(1L, "cup", new Money(3, 50));
-        productRepository.save(product);
+        em.persistAndFlush(product);
 
         mvc.perform(post("/user/5/cart/items")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
