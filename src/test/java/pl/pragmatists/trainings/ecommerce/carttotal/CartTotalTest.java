@@ -1,9 +1,5 @@
 package pl.pragmatists.trainings.ecommerce.carttotal;
 
-import static com.google.common.collect.Lists.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,16 +10,20 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
-
 import pl.pragmatists.trainings.ecommerce.cart.Cart;
 import pl.pragmatists.trainings.ecommerce.cart.CartItem;
 import pl.pragmatists.trainings.ecommerce.common.Money;
 import pl.pragmatists.trainings.ecommerce.product.persistence.Product;
 
+import static com.google.common.collect.Lists.newArrayList;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-@Transactional()
+@Transactional
 @AutoConfigureTestEntityManager
 public class CartTotalTest {
 
